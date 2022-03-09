@@ -54,7 +54,7 @@ WORKDIR /workdir
 CMD git clone -b ${GIT_TAG_NAME} https://github.com/metaplex-foundation/metaplex-program-library && \
     cd metaplex-program-library/${PROGRAM_NAME_TO_DEPLOY}/program && \
     touch updateAuthorityKey.json && \
-    if [ ${USE_ANCHOR} ]; then anchor build; else cargo build-bpf; fi && \
+    if [ ${USE_ANCHOR} ]; then anchor build; else cargo build-bpf --bpf-out-dir ../../target/deploy/; fi && \
     echo ${DEPLOYER_KEYPAIR} > deployer.json && \
     echo ${PROGRAM_KEYPAIR} > program_id.json && \
-    solana program deploy ../../target/deploy/${SO_FILE_NAME} -u ${CLUSTER} -k deployer.json
+    if [ ${USE_ANCHOR} ]; then solana program deploy ./target/deploy/${SO_FILE_NAME} -u ${CLUSTER} -k deployer.json; else solana program deploy ../../target/deploy/${SO_FILE_NAME} -u ${CLUSTER} -k deployer.json; fi
