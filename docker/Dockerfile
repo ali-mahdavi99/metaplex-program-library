@@ -40,7 +40,7 @@ RUN . $NVM_DIR/nvm.sh && \
 RUN sh -c "$(curl -sSfL https://release.solana.com/${SOLANA_CLI}/install)"
 
 # Install Anchor (if we need it)
-RUN if [[ -n "$ANCHOR_CLI" ]]; then \
+RUN if [ -n "$ANCHOR_CLI" ]; then \
         cargo install --git https://github.com/project-serum/anchor --tag ${ANCHOR_CLI} anchor-cli --locked; \
     fi
 
